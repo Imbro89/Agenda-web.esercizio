@@ -101,7 +101,7 @@ public class GiornocontrollerTest {
     verify(giornoRepository, never()).save(any());
 
     // Verifica del risultato
-    assertEquals("Giorno creato", result);
+    assertEquals("Esiste già un giorno con questa data", result);
   }
 
   @Test
