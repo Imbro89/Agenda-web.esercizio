@@ -19,31 +19,61 @@
 
 	<h2>Modifica appuntamento</h2>
 	<div class="col-6" style="max-height: 500px; overflow-y: scroll;">
-		<form method="post" th:action="@{/{id}/modifica(id=${appuntamento.id})}">
+		<form method="post" th:action="@{/{id}/modifica(id=${appuntamento.id})}" th:object="${appuntamento}">
 			<div class="form-group">
 				<label for="giornoId">Giorno</label>
-				<input type="number" class="form-control" id="giornoId" name="giornoId"
-					th:value="${appuntamento.giorno.id}" value="${appuntamento.giorno.id}" readonly>
+				<input type="number" class="form-control" id="giornoId" name="giornoId" th:value="*{giorno.id}">
 			</div>
 			<div class="form-group">
 				<label for="ora">Ora</label>
 				<input type="time" class="form-control" id="ora" name="ora"
-					th:value="${#temporals.format(appuntamento.ora, 'HH:mm')}" required>
+					th:value="${#temporals.format(appuntamento.ora, 'HH:mm')}">
 			</div>
 			<div class="form-group">
 				<label for="descrizione">Descrizione</label>
-				<input type="text" class="form-control" id="descrizione" name="descrizione"
-					th:value="${appuntamento.descrizione}" placeholder="Inserisci una breve descrizione" required>
+				<input type="text" class="form-control" id="descrizione" name="descrizione" th:value="*{descrizione}"
+					placeholder="Inserisci una breve descrizione">
 			</div>
 			<div class="form-group">
 				<label for="ufficio">Ufficio</label>
-				<select class="form-control" id="ufficio" name="ufficio" required>
+				<select class="form-control" id="ufficio" name="ufficio" th:value="*{ufficio}">
 					<option value="DIRETTORE" th:selected="${appuntamento.ufficio == 'DIRETTORE'}">DIRETTORE</option>
 					<option value="CONSULENTE" th:selected="${appuntamento.ufficio == 'CONSULENTE'}">CONSULENTE</option>
 				</select>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Modifica</button>
+		</form>
+	</div>
+
+
+	<!--<h2>Modifica appuntamento</h2>
+	<div class="col-6" style="max-height: 500px; overflow-y: scroll;">
+		<form method="post" th:action="@{/{id}/modifica(id=${appuntamento.id})}">
+			<div class="form-group">
+				<label for="giornoId">Giorno</label>
+				<input type="number" class="form-control" id="giornoId" name="giornoId"
+					th:value="${appuntamento.giorno.id}" value="${appuntamento.giorno.id}">
+			</div>
+			<div class="form-group">
+				<label for="ora">Ora</label>
+				<input type="time" class="form-control" id="ora" name="ora"
+					th:value="${#temporals.format(appuntamento.ora, 'HH:mm')}" >
+			</div>
+			<div class="form-group">
+				<label for="descrizione">Descrizione</label>
+				<input type="text" class="form-control" id="descrizione" name="descrizione"
+					th:value="${appuntamento.descrizione}" placeholder="Inserisci una breve descrizione" >
+			</div>
+			<div class="form-group">
+				<label for="ufficio">Ufficio</label>
+				<select class="form-control" id="ufficio" name="ufficio" >
+					<option value="DIRETTORE" th:selected="${appuntamento.ufficio == 'DIRETTORE'}">DIRETTORE</option>
+					<option value="CONSULENTE" th:selected="${appuntamento.ufficio == 'CONSULENTE'}">CONSULENTE</option>
+				</select>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Modifica</button>-->
 
 
 

@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "21c15b49-9439-4168-921e-07d514c5ebc5",
+		"name": "API Agenda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25912416"
+	},
+	"item": [
+		{
+			"name": "Chiamate Json Agenda",
+			"item": [
+				{
+					"name": "creagiorno",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\":\"2023-02-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/creaGiorno",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"creaGiorno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "visualizzagiorno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminagiorno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/eliminaGiorno/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"eliminaGiorno",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "creaAppuntamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"giorno\": {\r\n        \"id\": 1\r\n    },\r\n    \"ora\": \"12:30\",\r\n    \"descrizione\": \"Incontro\",\r\n    \"ufficio\": \"DIREZIONE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/creaAppuntamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"creaAppuntamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "visualizzamodificaAppuntamento",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "modificaappuntamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"giorno\": {\r\n        \"id\": 1\r\n    },\r\n    \"ora\": \"10:00\",\r\n    \"descrizione\": \"Appuntamento modificato\",\r\n    \"ufficio\": \"Ufficio\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/1/modifica",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"1",
+								"modifica"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminaappuntamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/eliminaAppuntamento/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"eliminaAppuntamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cercagiorno",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/appuntamenti/cerca?giorno=2023-02-21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"appuntamenti",
+								"cerca"
+							],
+							"query": [
+								{
+									"key": "giorno",
+									"value": "2023-02-21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cercaufficio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/appuntamenti/cerca?ufficio=DIR",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"appuntamenti",
+								"cerca"
+							],
+							"query": [
+								{
+									"key": "ufficio",
+									"value": "DIR"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cercadescrizione",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/appuntamenti/cerca?descrizione=Inc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"appuntamenti",
+								"cerca"
+							],
+							"query": [
+								{
+									"key": "descrizione",
+									"value": "Inc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
