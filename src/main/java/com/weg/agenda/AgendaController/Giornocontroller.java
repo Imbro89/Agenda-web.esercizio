@@ -39,9 +39,12 @@ public class Giornocontroller {
     @Autowired
     AppuntamentoRepository appuntamentoRepository;
 
-    public Giornocontroller(GiornoRepository giornoRepository) {
-        this.giornoRepository = giornoRepository;
+    public Giornocontroller() {
     }
+
+   // public Giornocontroller(GiornoRepository giornoRepository) {
+   //     this.giornoRepository = giornoRepository;
+   // }
 
     @GetMapping("/")
     public String index(Model model) {
