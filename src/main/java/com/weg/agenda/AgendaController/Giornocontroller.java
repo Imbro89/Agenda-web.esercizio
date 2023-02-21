@@ -42,10 +42,7 @@ public class Giornocontroller {
     public Giornocontroller() {
     }
 
-   // public Giornocontroller(GiornoRepository giornoRepository) {
-   //     this.giornoRepository = giornoRepository;
-   // }
-
+//home agenda
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Giorno> giorni = giornoRepository.findAll();
@@ -54,7 +51,7 @@ public class Giornocontroller {
         model.addAttribute("giorni", giorni);
         return "index";
     }
-
+//crea il giorno
     @PostMapping(path = "/creaGiorno", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> creaGiorno(@RequestBody Giorno nuovoGiorno) {
         Optional<Giorno> giornoEsistente = giornoRepository.findByData(nuovoGiorno.getData());
@@ -64,7 +61,7 @@ public class Giornocontroller {
         giornoRepository.save(nuovoGiorno);
         return ResponseEntity.ok("Giorno creato");
     }
-
+//elimina il giorno
     @Transactional
     @RequestMapping(value = "/eliminaGiorno/{id}", method = { RequestMethod.DELETE, RequestMethod.GET })
     public ResponseEntity<String> eliminaGiorno(@PathVariable("id") Integer id) {
@@ -75,7 +72,7 @@ public class Giornocontroller {
         giornoRepository.deleteById(id.intValue());
         return ResponseEntity.ok("Giorno eliminato");
     }
-
+//crea un appuntamento 
     @PostMapping(path = "/creaAppuntamento", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> creaAppuntamento(@RequestBody Appuntamento request) {
@@ -107,7 +104,7 @@ public class Giornocontroller {
 
         return new ResponseEntity<>("Appuntamento creato con successo", HttpStatus.OK);
     }
-
+//visualizza l'appuntamento da modificare
     @GetMapping("/{id}/modifica")
     public String mostraModificaAppuntamento(@PathVariable("id") Integer id,
             Model model) {
@@ -119,7 +116,7 @@ public class Giornocontroller {
         model.addAttribute("appuntamento", appuntamentoEsistente.get());
         return "appuntamentoModifica";
     }
-
+// modifica l'appuntamento 
     @PostMapping(path = "/{id}/modifica", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> modificaAppuntamento(@PathVariable("id") Integer id,
@@ -157,7 +154,7 @@ public class Giornocontroller {
 
         return new ResponseEntity<>("Appuntamento modificato con successo", HttpStatus.OK);
     }
-
+    //Elimina l'appuntamento 
     @PostMapping(path = "/eliminaAppuntamento/{id}", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> eliminaAppuntamento(@PathVariable("id") Integer id) {
@@ -168,7 +165,7 @@ public class Giornocontroller {
         appuntamentoRepository.deleteById(id);
         return new ResponseEntity<>("Appuntamento eliminato con successo", HttpStatus.OK);
     }
-
+//ricerca appuntamento per data-ufficio-descrizione tramite url
     @GetMapping(path = "/appuntamenti/cerca", produces = "text/html")
     public String cercaAppuntamenti(@RequestParam(name = "giorno", required = false) String giornoStr,
             @RequestParam(name = "descrizione", required = false) String descrizione,
@@ -205,7 +202,7 @@ public class Giornocontroller {
 
 }
 
-// metodo post modifica appuntamento riceve in json
+// 
 
 /*
  * @Controller
