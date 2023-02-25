@@ -44,7 +44,7 @@ public class Giornocontroller {
 
 //home agenda
     @GetMapping("/")
-    public String index(Model model) {
+    public Object index(Model model) {
         Iterable<Giorno> giorni = giornoRepository.findAll();
         Iterable<Appuntamento> appuntamenti = appuntamentoRepository.findAll();
         model.addAttribute("appuntamenti", appuntamenti);
@@ -53,7 +53,7 @@ public class Giornocontroller {
     }
 //crea il giorno
     @PostMapping(path = "/creaGiorno", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> creaGiorno(@RequestBody Giorno nuovoGiorno) {
+    public ResponseEntity<Object> creaGiorno(@RequestBody Giorno nuovoGiorno) {
         Optional<Giorno> giornoEsistente = giornoRepository.findByData(nuovoGiorno.getData());
         if (giornoEsistente.isPresent()) {
             return ResponseEntity.badRequest().body("Esiste già un giorno con questa data");
@@ -64,7 +64,7 @@ public class Giornocontroller {
 //elimina il giorno
     @Transactional
     @RequestMapping(value = "/eliminaGiorno/{id}", method = { RequestMethod.DELETE, RequestMethod.GET })
-    public ResponseEntity<String> eliminaGiorno(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> eliminaGiorno(@PathVariable("id") Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("Id non può essere null");
         }
@@ -106,7 +106,7 @@ public class Giornocontroller {
     }
 //visualizza l'appuntamento da modificare
     @GetMapping("/{id}/modifica")
-    public String mostraModificaAppuntamento(@PathVariable("id") Integer id,
+    public Object mostraModificaAppuntamento(@PathVariable("id") Integer id,
             Model model) {
         Optional<Appuntamento> appuntamentoEsistente = appuntamentoRepository.findById(id);
         if (!appuntamentoEsistente.isPresent()) {
@@ -167,7 +167,7 @@ public class Giornocontroller {
     }
 //ricerca appuntamento per data-ufficio-descrizione tramite url
     @GetMapping(path = "/appuntamenti/cerca", produces = "text/html")
-    public String cercaAppuntamenti(@RequestParam(name = "giorno", required = false) String giornoStr,
+    public Object cercaAppuntamenti(@RequestParam(name = "giorno", required = false) String giornoStr,
             @RequestParam(name = "descrizione", required = false) String descrizione,
             @RequestParam(name = "ufficio", required = false) String ufficio,
             Model model) {
@@ -202,230 +202,3 @@ public class Giornocontroller {
 
 }
 
-// 
-
-/*
- * @Controller
- * public class Giornocontroller {
- * 
- * @Autowired
- * GiornoRepository giornoRepository;
- * 
- * @Autowired
- * AppuntamentoRepository appuntamentoRepository;
- * 
- * public Giornocontroller(GiornoRepository giornoRepository) {
- * this.giornoRepository = giornoRepository;
- * }
- * 
- * @GetMapping("/")
- * public String index(Model model) {
- * Iterable<Giorno> giorni = giornoRepository.findAll();
- * Iterable<Appuntamento> appuntamenti = appuntamentoRepository.findAll();
- * model.addAttribute("appuntamenti", appuntamenti);
- * model.addAttribute("giorni", giorni);
- * return "index";
- * }
- * 
- * @PostMapping("/creaGiorno")
- * public String creaGiorno(@RequestParam("data") LocalDate data,
- * Model model) {
- * if (data == null) {
- * return "index";
- * }
- * Optional<Giorno> giornoEsistente = giornoRepository.findByData(data);
- * if (giornoEsistente.isPresent()) {
- * model.addAttribute("error", "Esiste già un giorno con questa data");
- * return "index";
- * }
- * Giorno nuovoGiorno = new Giorno(data);
- * giornoRepository.save(nuovoGiorno);
- * return "redirect:/";
- * }
- * 
- * @Transactional
- * 
- * @RequestMapping(value = "/eliminaGiorno/{id}", method = {
- * RequestMethod.DELETE, RequestMethod.GET })
- * public String eliminaGiorno(@PathVariable("id") Integer id, Model model) {
- * if (id == null) {
- * throw new IllegalArgumentException("Id non può essere null");
- * }
- * giornoRepository.deleteAppuntamentiByGiornoId(id);
- * giornoRepository.deleteById(id.intValue());
- * 
- * return "redirect:/";
- * }
- * 
- * 
- * @PostMapping("/creaAppuntamento")
- * public String creaAppuntamento(@RequestParam("giornoId") Integer
- * giornoId, @RequestParam("ora") LocalTime ora,
- * 
- * @RequestParam("descrizione") String descrizione, @RequestParam("ufficio")
- * String ufficio,
- * Model model) {
- * if (giornoId == null || ora == null || descrizione == null || ufficio ==
- * null) {
- * return "index";
- * }
- * 
- * Optional<Giorno> giorno = giornoRepository.findById(giornoId);
- * if (!giorno.isPresent()) {
- * model.addAttribute("errorDay", "Il giorno specificato non esiste");
- * return "index";
- * }
- * 
- * Optional<Appuntamento> oraEsistente =
- * appuntamentoRepository.findByOraAndId(ora, giornoId);
- * if (oraEsistente.isPresent()) {
- * model.addAttribute("errorTime",
- * "Esiste già un appuntamento per l'ora specificata");
- * return "index";
- * }
- * 
- * Appuntamento nuovoAppuntamento = new Appuntamento();
- * nuovoAppuntamento.setGiorno(giorno.get());
- * nuovoAppuntamento.setOra(ora);
- * nuovoAppuntamento.setDescrizione(descrizione);
- * nuovoAppuntamento.setUfficio(ufficio);
- * appuntamentoRepository.save(nuovoAppuntamento);
- * return "redirect:/";
- * }
- */
-
-/*
- * @GetMapping("/{id}/modifica")
- * public String mostraModificaAppuntamento(@PathVariable("id") Integer id,
- * Model model) {
- * Optional<Appuntamento> appuntamentoEsistente =
- * appuntamentoRepository.findById(id);
- * if (!appuntamentoEsistente.isPresent()) {
- * model.addAttribute("error", "L'appuntamento specificato non esiste");
- * return "appuntamentoModifica";
- * }
- * model.addAttribute("appuntamento", appuntamentoEsistente.get());
- * return "appuntamentoModifica";
- * }
- * 
- * @PostMapping("/{id}/modifica")
- * public String modificaAppuntamento(@PathVariable("id") Integer
- * id, @RequestParam("giornoId") Integer giornoId,
- * 
- * @RequestParam("ora") LocalTime ora, @RequestParam("descrizione") String
- * descrizione,
- * 
- * @RequestParam("ufficio") String ufficio, Model model) {
- * if (id == null || giornoId == null || ora == null || descrizione == null ||
- * ufficio == null) {
- * return "appuntamentoModifica";
- * }
- * 
- * Optional<Appuntamento> appuntamentoEsistente =
- * appuntamentoRepository.findById(id);
- * if (!appuntamentoEsistente.isPresent()) {
- * model.addAttribute("error", "L'appuntamento specificato non esiste");
- * return "appuntamentoModifica";
- * }
- * 
- * Optional<Appuntamento> oraEsistente =
- * appuntamentoRepository.findByOraAndId(ora, giornoId);
- * if (oraEsistente.isPresent() && !oraEsistente.get().getId().equals(id)) {
- * model.addAttribute("errorTime",
- * "Esiste già un appuntamento per l'ora specificata");
- * return "appuntamentoModifica";
- * }
- * 
- * Optional<Giorno> giorno = giornoRepository.findById(giornoId);
- * if (!giorno.isPresent()) {
- * model.addAttribute("errorDay", "Il giorno specificato non esiste");
- * return "appuntamentoModifica";
- * }
- * 
- * appuntamentoEsistente.get().setGiorno(giorno.get());
- * appuntamentoEsistente.get().setOra(ora);
- * appuntamentoEsistente.get().setDescrizione(descrizione);
- * appuntamentoEsistente.get().setUfficio(ufficio);
- * appuntamentoRepository.save(appuntamentoEsistente.get());
- * 
- * return "redirect:/";
- * }
- * 
- * @RequestMapping(value = "/eliminaAppuntamento/{id}", method = {
- * RequestMethod.DELETE, RequestMethod.GET })
- * public String eliminaAppuntamento(@PathVariable("id") Integer id, Model
- * model) {
- * if (id == null) {
- * throw new IllegalArgumentException("Id non può essere null");
- * }
- * appuntamentoRepository.deleteById(id.intValue());
- * return "redirect:/";
- * }
- */
-/*
- * @GetMapping("/appuntamenti/cerca")
- * public String cercaAppuntamenti(
- * 
- * @RequestParam(required = false) String descrizione,
- * 
- * @RequestParam(required = false) String ufficio,
- * 
- * @RequestParam(required = false) @DateTimeFormat(iso =
- * DateTimeFormat.ISO.DATE) LocalDate data,
- * Model model) {
- * 
- * List<Appuntamento> appuntamenti = new ArrayList<>();
- * List<Giorno> giorni = new ArrayList<>();
- * 
- * if (descrizione != null && ufficio != null && data != null &&
- * descrizione.trim().length() > 0
- * && ufficio.trim().length() > 0) {
- * appuntamenti = appuntamentoRepository
- * .findByDescrizioneContainingOrUfficioContainingOrGiornoData(descrizione,
- * ufficio, data);
- * 
- * } else if (descrizione != null && ufficio != null &&
- * descrizione.trim().length() > 0
- * && ufficio.trim().length() > 0) {
- * appuntamenti =
- * appuntamentoRepository.findByDescrizioneContainingAndUfficioContaining(
- * descrizione, ufficio);
- * 
- * } else if (descrizione != null && data != null && descrizione.trim().length()
- * > 0) {
- * appuntamenti =
- * appuntamentoRepository.findByDescrizioneContainingAndGiornoData(descrizione,
- * data);
- * 
- * } else if (ufficio != null && data != null && ufficio.trim().length() > 0) {
- * appuntamenti =
- * appuntamentoRepository.findByUfficioContainingAndGiornoData(ufficio, data);
- * 
- * } else if (descrizione != null && descrizione.trim().length() > 0) {
- * appuntamenti =
- * appuntamentoRepository.findByDescrizioneContaining(descrizione);
- * 
- * } else if (ufficio != null && ufficio.trim().length() > 0) {
- * appuntamenti = appuntamentoRepository.findByUfficioContaining(ufficio);
- * 
- * } else if (data != null) {
- * appuntamenti = appuntamentoRepository.findByGiornoData(data);
- * } else {
- * 
- * appuntamenti = appuntamentoRepository.findAll();
- * }
- * 
- * if (appuntamenti.isEmpty()) {
- * model.addAttribute("niente", "Nessun appuntamento trovato.");
- * } else {
- * model.addAttribute("appuntamenti", appuntamenti);
- * model.addAttribute("giorni", giorni);
- * model.addAttribute("descrizione", descrizione);
- * model.addAttribute("ufficio", ufficio);
- * model.addAttribute("data", data);
- * }
- * 
- * return "cerca";
- * }
- * }
- */
