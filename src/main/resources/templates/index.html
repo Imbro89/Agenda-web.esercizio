@@ -54,7 +54,7 @@
           <label for="data">Data</label>
           <input type="date" id="data" name="data" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Crea Giorno</button>
+        <!--<button type="submit" class="btn btn-primary">Crea Giorno</button>-->
       </form>
     </div>
 
@@ -105,9 +105,9 @@
                 <div class="btn-group">
                   <a th:href="@{/{id}/modifica(id=${appuntamento.id})}" class="btn btn-danger"><i
                       class="fa-sharp fa-solid fa-pen"></i></a>
-                  <a th:href="@{/eliminaAppuntamento/{id}(id=${appuntamento.id})}" class="btn btn-danger">
-                    <button type="button" class="btn-close" aria-label="Close">
-                    </button>
+                  <!--<a th:href="@{/eliminaAppuntamento/{id}(id=${appuntamento.id})}" class="btn btn-danger">
+                    <button type="button" class="btn-close" aria-label="Close">-->
+                  </button>
                   </a>
                 </div>
               </td>
@@ -147,7 +147,7 @@
             <option th:each="giorno : ${giorni}" th:value="${giorno.id}" th:text="${giorno.data}"></option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Crea Appuntamento</button>
+        <!--<button type="submit" class="btn btn-primary">Crea Appuntamento</button>-->
         <hr>
       </form>
 
